@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Auteur;
 use App\Entity\Livre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,6 +40,39 @@ class LivreRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByTitle(string $titre): array{
+       return $this->createQueryBuilder('l')
+           ->andWhere('l.titre LIKE :titre')
+           ->setParameter('titre', "%{$titre}%")
+           ->orderBy('l.titre', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+    }
+
+    public function findByAuteur(Auteur $auteur): array
+    {
+       return $this->createQueryBuilder('l')
+           ->join('l.auteur', 'a')
+           ->andWhere('a.id = :id')
+           ->setParameter('id', $auteur->getId())
+           ->orderBy('l.titre', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+    }
+
+    public function findByNomGenre(string $nomGenre): array
+    {
+       return $this->createQueryBuilder('l')
+           ->join('l.genres', 'g')
+           ->andWhere('g.nom LIKE :nomGenre')
+           ->setParameter('nomGenre', "%{$nomGenre}%")
+           ->orderBy('l.titre', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+    }
 //    /**
 //     * @return Livre[] Returns an array of Livre objects
 //     */
