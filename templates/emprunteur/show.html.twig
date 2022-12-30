@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emprunteur{% endblock %}
+
+{% block body %}
+    <h1>Emprunteur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ emprunteur.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ emprunteur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ emprunteur.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Tel</th>
+                <td>{{ emprunteur.tel }}</td>
+            </tr>
+            <tr>
+                <th>Actif</th>
+                <td>{{ emprunteur.actif ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_emprunteur_index') }}">back to list</a>
+
+    <a href="{{ path('app_emprunteur_edit', {'id': emprunteur.id}) }}">edit</a>
+
+    {{ include('emprunteur/_delete_form.html.twig') }}
+{% endblock %}
